@@ -1,6 +1,7 @@
 import React from 'react'
 import { LoginAdmin } from '../../pages/Admin/LoginAdmin'
 import { useAuth } from '../../hooks'
+import { TopMenu } from '../../components/Admin'
 import './AdminLayout.scss'
 
 export function AdminLayout (props) {
@@ -9,5 +10,12 @@ export function AdminLayout (props) {
 
   if (!auth) return <LoginAdmin />
 
-  return <div>{children}</div>
+  return (
+    <div className='admin-layout'>
+      <div className='admin-layout__menu'>
+        <TopMenu />
+      </div>
+      <div className='admin-layout__main-content'>{children}</div>
+    </div>
+  )
 }
