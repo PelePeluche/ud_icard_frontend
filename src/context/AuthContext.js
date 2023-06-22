@@ -29,7 +29,6 @@ export function AuthProvider (props) {
     setToken(token)
     const me = await getMe(token)
     setAuth({ token, me })
-    console.log(me)
   }
 
   const logout = () => {
