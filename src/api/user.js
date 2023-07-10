@@ -43,3 +43,22 @@ export async function getMeApi (token) {
     throw error
   }
 }
+
+export async function getUsersApi (token) {
+  try {
+    const url = `${BASE_API}/api/users/`
+    const params = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    const response = await fetch(url, params)
+    const result = await response.json()
+
+    return result
+    
+  } catch (error) {
+    throw error
+  }
+}
