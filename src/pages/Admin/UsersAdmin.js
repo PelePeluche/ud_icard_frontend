@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { HePage } from '../../components/Admin'
 import { useUser } from '../../hooks/useUser'
 
 export function UsersAdmin () {
@@ -9,8 +10,9 @@ export function UsersAdmin () {
   }, [])
 
   return (
-    <div>
+    <>
+      <HePage title='Usuarios' btnTitle='Nuevo usuario' btnTitleTwo='Eliminar usuario'/>
       <h1>Estamos en Users Admin</h1>
-    </div>
+    </>
   )
 }
