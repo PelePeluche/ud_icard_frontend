@@ -8,6 +8,18 @@ export function HePage (props) {
   return (
     <div className='he-page-admin'>
       <h2>{title}</h2>
+      <div>
+        {btnTitle && (
+          <Button positive onClick={btnClick}>
+            {btnTitle}
+          </Button>
+        )}
+        {btnTitleTwo && (
+          <Button negative onClick={btnClickTwo}>
+            {btnTitleTwo}
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

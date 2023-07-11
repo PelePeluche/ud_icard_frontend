@@ -12,11 +12,7 @@ export function UsersAdmin () {
 
   return (
     <>
-      <HePage
-        title='Usuarios'
-        btnTitle='Nuevo usuario'
-        btnTitleTwo='Eliminar usuario'
-      />
+      <HePage title='Usuarios' btnTitle='Nuevo usuario' />
       {loading ? (
         <Loader active inline='centered'>
           Cargando...
