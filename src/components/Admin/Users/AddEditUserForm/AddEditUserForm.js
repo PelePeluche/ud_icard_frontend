@@ -2,16 +2,22 @@ import React from 'react'
 import { Form, Button, Checkbox } from 'semantic-ui-react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useUser } from '../../../../hooks'
 import './AddEditUserForm.scss'
 
 export function AddEditUserForm () {
+  const { addUser } = useUser()
   const formik = useFormik({
     initialValues: initalValues(),
     validationSchema: Yup.object(newValidationSchema()),
     validateOnChange: false,
-    onSubmit: formValue => {
-      console.log('Formulario enviado')
-      console.log(formValue)
+    onSubmit: async formValue => {
+      try {
+        await addUser(formValue)
+        console.log('Usuario creado con éxito')
+      } catch (error) {
+        console.error(error)
+      }
     }
   })
 
@@ -47,6 +53,7 @@ export function AddEditUserForm () {
       />
       <Form.Input
         name='password'
+        type='password'
         placeholder='Contraseña'
         value={formik.values.password}
         onChange={formik.handleChange}
