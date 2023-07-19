@@ -6,16 +6,19 @@ import { useUser } from '../../../../hooks'
 import './AddEditUserForm.scss'
 
 export function AddEditUserForm (props) {
-  const { onClose, onRefetch } = props
+  const { onClose, onRefetch, user } = props
   const { addUser } = useUser()
 
   const formik = useFormik({
-    initialValues: initalValues(),
-    validationSchema: Yup.object(newValidationSchema()),
+    initialValues: initalValues(user),
+    validationSchema: Yup.object(
+      user ? updateValidationSchema : newValidationSchema()
+    ),
     validateOnChange: false,
     onSubmit: async formValue => {
       try {
-        await addUser(formValue)
+        if (user) console.log('Editar usuario')
+        else await addUser(formValue)
         onRefetch()
         onClose()
       } catch (error) {
@@ -83,19 +86,25 @@ export function AddEditUserForm (props) {
         Usuario administrador
       </div>
 
-      <Button type='submit' primary fluid content='Crear' />
+      <Button
+        type='submit'
+        primary
+        fluid
+        content={user ? 'Editar usuario' : 'Crear usuario'}
+      />
     </Form>
   )
 }
 
-function initalValues () {
+function initalValues (data) {
+  console.log(data)
   return {
-    username: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-    is_active: true,
-    is_staff: false,
+    username: data?.username || '',
+    email: data?.email || '',
+    first_name: data?.first_name || '',
+    last_name: data?.last_name || '',
+    is_active: data?.is_active ? true : false,
+    is_staff: data?.is_staff || false,
     password: ''
   }
 }
@@ -107,6 +116,18 @@ function newValidationSchema () {
     first_name: Yup.string(),
     last_name: Yup.string(),
     is_active: Yup.bool().required(true),
+    is_staff: Yup.bool().required(true),
+    password: Yup.string().required(true)
+  }
+}
+
+function updateValidationSchema () {
+  return {
+    username: Yup.string().required(true),
+    email: Yup.string().email(true).required(true),
+    first_name: Yup.string(),
+    last_name: Yup.string(),
+    is_active: Yup.bool(),
     is_staff: Yup.bool().required(true),
     password: Yup.string().required(true)
   }

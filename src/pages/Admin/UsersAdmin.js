@@ -31,7 +31,11 @@ export function UsersAdmin () {
   const updateUser = data => {
     setTitleModal('Editar usuario')
     setContentModal(
-      <AddEditUserForm onClose={openCloseModal} onRefetch={onRefetch} />
+      <AddEditUserForm
+        onClose={openCloseModal}
+        onRefetch={onRefetch}
+        user={data}
+      />
     )
     openCloseModal()
   }
