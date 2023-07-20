@@ -9,7 +9,7 @@ export function UsersAdmin () {
   const [titleModal, setTitleModal] = useState(null)
   const [contentModal, setContentModal] = useState(null)
   const [refetch, setRefetch] = useState(false)
-  const { loading, users, getUsers } = useUser()
+  const { loading, users, getUsers, deleteUser } = useUser()
 
   useEffect(() => {
     getUsers()
@@ -40,6 +40,21 @@ export function UsersAdmin () {
     openCloseModal()
   }
 
+  const onDeleteUser = async data => {
+    const result = window.confirm(
+      `¿Desea eliminar el usuario ${data.username}?`
+    )
+
+    if (result) {
+      try {
+        await deleteUser(data.id)
+        onRefetch()
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
+
   return (
     <>
       <HePage title='Usuarios' btnTitle='Nuevo usuario' btnClick={addUser} />
@@ -48,7 +63,11 @@ export function UsersAdmin () {
           Cargando...
         </Loader>
       ) : (
-        <TableUsers users={users} updateUser={updateUser} />
+        <TableUsers
+          users={users}
+          updateUser={updateUser}
+          onDeleteUser={onDeleteUser}
+        />
       )}
       <ModalBasic
         show={showModal}
